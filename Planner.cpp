@@ -7,7 +7,7 @@
 int day_to_int(std::string day){
    std::vector <char> holder;
    for (unsigned int index = 0; index < day.size();index++){
-      if (day[index]!= '/' && day[index] > 58 && day[index] < 48){
+      if (day[index]!= '/' && (day[index] > 58 || day[index] < 48)){
          return 0;
       }
       if (day[index]!= '/'){
@@ -15,7 +15,8 @@ int day_to_int(std::string day){
       }
    }
    std::string str(holder.begin(),holder.end());
-   std::stringstream ss(str);
+   std::string backwards_string = str.substr(4,4)+str.substr(0,4);
+   std::stringstream ss(backwards_string);
    int date_as_int;
    ss >> date_as_int;
    return date_as_int;
@@ -53,6 +54,7 @@ int main (int argc, char* argv[])
    std::string operation;   
    while (operation != "q" && operation != "Q")
       {
+      std::cout << std::endl << std::endl;
       std::cout << "Search for specific day (SD), specific week (SW), " 
                 << std::endl << "add an item (A), delete an item (D), " 
                 << "or quit (Q)" << std::endl;

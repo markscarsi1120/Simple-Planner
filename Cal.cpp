@@ -9,8 +9,9 @@ Cal::Cal(){
 Cal::~Cal(){
 	Day * temp = head;
 	while (temp != NULL){
+		Day * hold = temp;
 		temp = temp->next;
-		delete temp;
+		delete hold;
 	}
 }
 Day * Cal::lookup_day(int date){
@@ -76,8 +77,13 @@ void Cal::lookup_week(int date){
    if (found !=NULL) {
       while (temp != NULL){
          if (temp->next != NULL){
-      		if (temp->number_date <= 70000+found->number_date){
-      			std::cout << temp->number_date << std::endl;
+      		if (temp->number_date <= 7+found->number_date){
+      			int reversedate = temp->number_date;
+      			int day_digit = reversedate % 100;
+      			reversedate = reversedate / 100;
+      			int month_digit = reversedate % 100;
+      			reversedate = reversedate / 100;
+      			std::cout << month_digit << "/" << day_digit << "/" << reversedate << std::endl;
       			print(temp);
       		}
       	 }
@@ -93,8 +99,8 @@ void Cal::concluding_write(std::string name){
 		std::stringstream ss;
 		ss << temp->number_date;
 		std::string date_string = ss.str();
-		final_in << date_string.substr(0,2)+"/"+date_string.substr(2,2)+
-		        "/"+date_string.substr(4,4) << "\n";
+		final_in << date_string.substr(4,2) << "/" << date_string.substr(6,2) <<
+		        "/" << date_string.substr(0,4) << "\n";
 		for (unsigned int index = 0; index < temp->agenda.size(); index++){
 			final_in << temp->agenda[index] << "\n";
 		}
